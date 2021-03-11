@@ -1,16 +1,20 @@
 package com.sparta.joel.javaee.entities;
 
+import javax.enterprise.context.RequestScoped;
+import javax.inject.Named;
 import javax.persistence.*;
 import java.util.Objects;
 
+@Named
+@RequestScoped
 @Entity
 @Table(name = "users", schema = "demo")
-
 public class UsersEntity {
 
     private int id;
     private String name;
     private String email;
+    private String password;
 
     @Id
     @Column(name = "id")
@@ -40,6 +44,16 @@ public class UsersEntity {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    @Basic
+    @Column(name = "password")
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     @Override
