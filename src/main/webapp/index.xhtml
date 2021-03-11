@@ -29,9 +29,11 @@
                                 <h:inputText value="#{userService.user.name}"/>
                                 <h:outputLabel value="Password: "/>
                                 <h:inputText value="#{userService.user.password}"/>
-                                <h:commandButton value="Send" action="#{userService.welcome}">
-                                    <f:param name="parameter" value="admin"/>
-                                </h:commandButton>
+                                <h:selectOneMenu value="#{userService.loginType}">
+                                    <f:selectItem itemValue="user" itemLabel="User" />
+                                    <f:selectItem itemValue="admin" itemLabel="Admin" />
+                                </h:selectOneMenu>
+                                <h:commandButton value="Send" action="#{userService.welcome}"/>
                             </h:panelGrid>
                         </h:form>
                     </div>

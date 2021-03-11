@@ -18,12 +18,12 @@
             <h:form id="add_user">
                 <h:panelGrid columns="2" cellpadding="10">
                     <h:outputLabel value="ID: "/>
-                    <h:inputText value="#{user}"/>
+                    <h:inputText value="#{userService.user.id}"/>
                     <h:outputLabel value="Username: "/>
                     <h:inputText value="#{userService.user.name}"/>
                     <h:outputLabel value="Email: "/>
                     <h:inputText value="#{userService.user.email}"/>
-                    <h:outputLabel value="password: "/>
+                    <h:outputLabel value="Password: "/>
                     <h:inputText value="#{userService.user.password}"/>
                     <h:commandButton value="Submit" action="#{userService.persistData}"/>
                 </h:panelGrid>

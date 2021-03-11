@@ -4,6 +4,7 @@ import com.sparta.joel.javaee.datastore.LoginType;
 import com.sparta.joel.javaee.entities.UsersEntity;
 
 import javax.enterprise.context.RequestScoped;
+import javax.faces.annotation.ManagedProperty;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -19,6 +20,7 @@ public class UserService {
 
     @Inject
     UsersEntity user;
+    String loginType;
 
     public UsersEntity getUser() {
         return user;
@@ -29,13 +31,11 @@ public class UserService {
     }
 
     public String welcome(){
-        Map<String, String> parameterMap = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
-        String param = parameterMap.get("parameter");
-        if(param.equals("user")){
+        if(loginType.equals("user")){
             if(user.getName().equals("Joel") && user.getPassword().equals("password")){
                 return "welcome";
             }
-        }else if(param.equals("admin")){
+        }else if(loginType.equals("admin")){
             if(user.getName().equals("admin") && user.getPassword().equals("root")){
                 return "admin";
             }
@@ -43,6 +43,13 @@ public class UserService {
         return "loginError";
     }
 
+    public String getLoginType(){
+        return loginType;
+    }
+
+    public void setLoginType(String loginType){
+        this.loginType = loginType;
+    }
 
     public void persistData(){
         EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("default");
