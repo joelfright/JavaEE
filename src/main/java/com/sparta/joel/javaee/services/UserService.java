@@ -5,10 +5,8 @@ import com.sparta.joel.javaee.entities.UsersEntity;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
-import javax.persistence.Persistence;
+import javax.persistence.*;
+import java.util.List;
 
 @Named
 @RequestScoped
@@ -28,7 +26,7 @@ public class UserService {
 
     public String welcome() {
         if (loginType.equals("user")) {
-            if (user.getName().equals("Joel") && user.getPassword().equals("password")) {
+            if (userExists()) {
                 return "welcome";
             }
         } else if (loginType.equals("admin")) {
@@ -48,19 +46,29 @@ public class UserService {
     }
 
     public String persistData() {
-
-        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("javaee");
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
-        EntityTransaction transaction = entityManager.getTransaction();
-
-        transaction.begin();
-
-        entityManager.persist(user);
-
-        transaction.commit();
-
+        EntityManager em =getEntityManager();
+        em.getTransaction().begin();
+        em.persist(user);
+        em.getTransaction().commit();
         return "datainputted";
+    }
 
+    public boolean userExists(){
+        EntityManager em = getEntityManager();
+        Query query = em.createQuery("SELECT u FROM UsersEntity u WHERE u.name = ?1 AND u.password = ?2");
+        query.setParameter(1,user.getName());
+        query.setParameter(2,user.getPassword());
+        try{
+            query.getSingleResult();
+            return true;
+        }catch(javax.persistence.NoResultException e){
+            return false;
+        }
+    }
+
+    public EntityManager getEntityManager(){
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("javaee");
+        return entityManagerFactory.createEntityManager();
     }
 
 }
