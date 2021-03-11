@@ -1,12 +1,8 @@
 package com.sparta.joel.javaee.entities;
 
-import javax.enterprise.context.RequestScoped;
-import javax.inject.Named;
 import javax.persistence.*;
 import java.util.Objects;
 
-@Named
-@RequestScoped
 @Entity
 @Table(name = "users", schema = "demo")
 public class UsersEntity {
@@ -68,4 +64,6 @@ public class UsersEntity {
     public int hashCode() {
         return Objects.hash(id, name, email);
     }
+
+
 }

@@ -1,18 +1,14 @@
 package com.sparta.joel.javaee.services;
 
-import com.sparta.joel.javaee.datastore.LoginType;
 import com.sparta.joel.javaee.entities.UsersEntity;
 
 import javax.enterprise.context.RequestScoped;
-import javax.faces.annotation.ManagedProperty;
-import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
-import java.util.Map;
 
 @Named
 @RequestScoped
@@ -30,29 +26,30 @@ public class UserService {
         this.user = user;
     }
 
-    public String welcome(){
-        if(loginType.equals("user")){
-            if(user.getName().equals("Joel") && user.getPassword().equals("password")){
+    public String welcome() {
+        if (loginType.equals("user")) {
+            if (user.getName().equals("Joel") && user.getPassword().equals("password")) {
                 return "welcome";
             }
-        }else if(loginType.equals("admin")){
-            if(user.getName().equals("admin") && user.getPassword().equals("root")){
+        } else if (loginType.equals("admin")) {
+            if (user.getName().equals("admin") && user.getPassword().equals("root")) {
                 return "admin";
             }
         }
         return "loginError";
     }
 
-    public String getLoginType(){
+    public String getLoginType() {
         return loginType;
     }
 
-    public void setLoginType(String loginType){
+    public void setLoginType(String loginType) {
         this.loginType = loginType;
     }
 
-    public void persistData(){
-        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("default");
+    public String persistData() {
+
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("javaee");
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         EntityTransaction transaction = entityManager.getTransaction();
 
@@ -62,8 +59,8 @@ public class UserService {
 
         transaction.commit();
 
-        entityManager.close();
-        entityManagerFactory.close();
+        return "datainputted";
+
     }
 
 }

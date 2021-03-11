@@ -5,9 +5,9 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.sparta.joel</groupId>
-    <artifactId>JSFExample</artifactId>
+    <artifactId>JavaEE</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <name>JSFExample</name>
+    <name>JavaEE</name>
     <packaging>war</packaging>
 
     <properties>
@@ -44,6 +44,16 @@
             <groupId>org.webjars</groupId>
             <artifactId>bootstrap</artifactId>
             <version>5.0.0-beta2</version>
+        </dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.23</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>5.4.29.Final</version>
         </dependency>
     </dependencies>
 
