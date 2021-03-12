@@ -5,27 +5,24 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
-<head>
+<h:head>
     <title>Welcome</title>
-    <!-- Bootstrap CSS -->
-    <link href="webjars/bootstrap/5.0.0-beta2/css/bootstrap.min.css" rel="stylesheet"/>
-    <link href="resources/css/style.css" rel="stylesheet"/>
-</head>
-<body>
-<ui:composition template="WEB-INF/templates/template.xhtml">
-    <ui:define name="content">
-        <div class="alert alert-success">
-            Successful Login!
-        </div>
-        <div class="text-center">
-            <h2 class="display-1">Welcome #{userService.user.name}!</h2>
-        </div>
-        <div class="text-center">
-            <h:graphicImage value="resources/images/leo-gif.gif"/>
-        </div>
-    </ui:define>
-</ui:composition>
-<script src="webjars/popper.js/2.5.4/umd/popper.min.js" type=""></script>
-<script src="webjars/bootstrap/5.0.0-beta2/js/bootstrap.min.js" type=""></script>
-</body>
+    <h:outputStylesheet name="webjars/bootstrap/5.0.0-beta2/css/bootstrap.min.css"/>
+    <h:outputScript name="webjars/popper.js/2.5.4/umd/popper.min.js"/>
+</h:head>
+<h:body>
+    <ui:composition template="WEB-INF/templates/template.xhtml">
+        <ui:define name="content">
+            <div class="alert alert-success">
+                Successful Login!
+            </div>
+            <div class="text-center">
+                <h2 class="display-1">Welcome #{login.user.name}!</h2>
+            </div>
+            <div class="text-center">
+                <h:graphicImage value="resources/images/leo-gif.gif"/>
+            </div>
+        </ui:define>
+    </ui:composition>
+</h:body>
 </html>
