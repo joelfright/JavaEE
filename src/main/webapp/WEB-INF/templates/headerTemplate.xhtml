@@ -24,6 +24,12 @@
                         <li class="nav-item">
                             <a class="nav-link" style="color:hotpink" href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">Free Stuff Here</a>
                         </li>
+                        <li class="nav-item">
+                            <h:form>
+                                <h:commandButton value="Login" action="#{userService.login}"/>
+                                <h:commandButton value="Logout" action="#{userService.logout}"/>
+                            </h:form>
+                        </li>
                     </ul>
                 </div>
             </div>
