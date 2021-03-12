@@ -3,12 +3,20 @@ package com.sparta.joel.javaee.services;
 import com.sparta.joel.javaee.entities.UsersEntity;
 
 import javax.enterprise.context.RequestScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
-import javax.persistence.Persistence;
+import javax.persistence.*;
+import javax.security.enterprise.SecurityContext;
+import javax.security.enterprise.credential.UsernamePasswordCredential;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import javax.security.enterprise.AuthenticationStatus;
+import javax.security.enterprise.authentication.mechanism.http.AuthenticationParameters;
 
 @Named
 @RequestScoped
@@ -18,6 +26,15 @@ public class UserService {
     UsersEntity user;
     String loginType;
 
+    @Inject
+    SecurityContext securityContext;
+
+    @Inject
+    ExternalContext externalContext;
+
+    @Inject
+    FacesContext facesContext;
+
     public UsersEntity getUser() {
         return user;
     }
@@ -26,17 +43,39 @@ public class UserService {
         this.user = user;
     }
 
-    public String welcome() {
-        if (loginType.equals("user")) {
-            if (user.getName().equals("Joel") && user.getPassword().equals("password")) {
-                return "welcome";
-            }
-        } else if (loginType.equals("admin")) {
-            if (user.getName().equals("admin") && user.getPassword().equals("root")) {
-                return "admin";
-            }
+    public void welcome() throws IOException {
+        switch (continueAuthentication()) {
+            case SEND_CONTINUE:
+                facesContext.responseComplete();
+                break;
+            case SEND_FAILURE:
+                facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Login unsuccessful", null));
+                break;
+            case SUCCESS:
+                if (userExists()) {
+                    if (securityContext.isCallerInRole("ADMIN")) {
+                        externalContext.redirect(externalContext.getRequestContextPath() + "/admin.xhtml");
+                    } else {
+                        externalContext.redirect(externalContext.getRequestContextPath() + "/welcome.xhtml");
+                    }
+                } else {
+                    externalContext.redirect(externalContext.getRequestContextPath() + "/loginError.xhtml");
+                }
         }
-        return "loginError";
+    }
+
+    private AuthenticationStatus continueAuthentication() {
+        return securityContext.authenticate(
+                (HttpServletRequest) externalContext.getRequest(),
+                (HttpServletResponse) externalContext.getResponse(),
+                AuthenticationParameters.withParams().credential(new UsernamePasswordCredential(user.getName(), user.getPassword()))
+        );
+    }
+
+    public String logout() throws ServletException {
+        ExternalContext externalContext = facesContext.getExternalContext();
+        ((HttpServletRequest) externalContext.getRequest()).logout();
+        return "/index.xhtml?faces-redirect=true";
     }
 
     public String getLoginType() {
@@ -47,20 +86,34 @@ public class UserService {
         this.loginType = loginType;
     }
 
-    public String persistData() {
-
+    public EntityManager getEntityManager() {
         EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("javaee");
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
-        EntityTransaction transaction = entityManager.getTransaction();
+        return entityManagerFactory.createEntityManager();
+    }
 
-        transaction.begin();
-
-        entityManager.persist(user);
-
-        transaction.commit();
-
+    public String persistData() {
+        EntityManager em = getEntityManager();
+        em.getTransaction().begin();
+        em.persist(user);
+        em.getTransaction().commit();
         return "datainputted";
+    }
 
+    public boolean userExists() {
+        EntityManager em = getEntityManager();
+        Query query = em.createQuery("SELECT u FROM UsersEntity u WHERE u.name = ?1 AND u.password = ?2");
+        query.setParameter(1, user.getName());
+        query.setParameter(2, user.getPassword());
+        try {
+            query.getSingleResult();
+            return true;
+        } catch (javax.persistence.NoResultException e) {
+            return false;
+        }
+    }
+
+    public String login(){
+        return "loginPage";
     }
 
 }
