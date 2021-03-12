@@ -5,12 +5,11 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "users", schema = "demo")
-
-public class UsersEntity {
+public class UserEntity {
 
     private int id;
     private String name;
-    private String email;
+    private String password;
 
     @Id
     @Column(name = "id")
@@ -33,25 +32,26 @@ public class UsersEntity {
     }
 
     @Basic
-    @Column(name = "email")
-    public String getEmail() {
-        return email;
+    @Column(name = "password")
+    public String getPassword() {
+        return password;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        UsersEntity that = (UsersEntity) o;
-        return Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(email, that.email);
+        UserEntity that = (UserEntity) o;
+        return Objects.equals(id, that.id) && Objects.equals(name, that.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, email);
+        return Objects.hash(id, name);
     }
+
 }

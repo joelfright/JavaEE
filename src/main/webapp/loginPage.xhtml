@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+    <title>Login</title>
+    <h:outputStylesheet name="webjars/bootstrap/5.0.0-beta2/css/bootstrap.min.css"/>
+    <h:outputScript name="webjars/popper.js/2.5.4/umd/popper.min.js"/>
+</h:head>
+<h:body>
+    <ui:composition template="WEB-INF/templates/template.xhtml">
+        <ui:define name="content">
+            <div class="accordion" id="accordionLogin">
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingOne">
+                        <button class="accordion-button" type="button">
+                            Login
+                        </button>
+                    </h2>
+                    <div id="collapseOne" class="accordion-collapse collapse show">
+                        <div class="accordion-body">
+                            <h:form id="login">
+                                <h:panelGrid columns="2" cellpadding="10">
+                                    <h:outputLabel value="Username: "/>
+                                    <h:inputText value="#{login.user.name}"/>
+                                    <h:outputLabel value="Password: "/>
+                                    <h:inputText value="#{login.user.password}"/>
+                                    <h:commandButton value="Submit" action="#{login.welcome}"/>
+                                </h:panelGrid>
+                            </h:form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ui:define>
+    </ui:composition>
+</h:body>
+</html>
