@@ -10,7 +10,7 @@
     <security-constraint>
         <web-resource-collection>
             <web-resource-name>Add User Page</web-resource-name>
-            <url-pattern>/admin.xhtml</url-pattern>
+            <url-pattern>/view/admin.xhtml</url-pattern>
         </web-resource-collection>
         <auth-constraint>
             <role-name>ADMIN</role-name>

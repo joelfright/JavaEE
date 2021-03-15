@@ -6,21 +6,15 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 <h:head>
-    <title>Welcome</title>
+    <title>Login</title>
     <h:outputStylesheet name="webjars/bootstrap/5.0.0-beta2/css/bootstrap.min.css"/>
     <h:outputScript name="webjars/popper.js/2.5.4/umd/popper.min.js"/>
 </h:head>
 <h:body>
-    <ui:composition template="WEB-INF/templates/template.xhtml">
+    <ui:composition template="../WEB-INF/templates/template.xhtml">
         <ui:define name="content">
-            <div class="alert alert-success">
-                Successful Login!
-            </div>
-            <div class="text-center">
-                <h2 class="display-1">Welcome #{login.user.name}!</h2>
-            </div>
-            <div class="text-center">
-                <h:graphicImage value="resources/images/leo-gif.gif"/>
+            <div class="alert alert-danger">
+                Unsuccessful Login!
             </div>
         </ui:define>
     </ui:composition>

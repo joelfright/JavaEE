@@ -37,7 +37,7 @@ public class Login {
     FacesContext facesContext;
 
     public String login() {
-        return "loginPage";
+        return "view/loginPage.xhtml";
     }
 
     public UserEntity getUser() {
@@ -59,12 +59,12 @@ public class Login {
             case SUCCESS:
                 if (userExists()) {
                     if (securityContext.isCallerInRole("ADMIN")) {
-                        externalContext.redirect(externalContext.getRequestContextPath() + "/admin.xhtml");
+                        externalContext.redirect(externalContext.getRequestContextPath() + "/view/admin.xhtml");
                     } else {
-                        externalContext.redirect(externalContext.getRequestContextPath() + "/welcome.xhtml");
+                        externalContext.redirect(externalContext.getRequestContextPath() + "/view/welcome.xhtml");
                     }
                 } else {
-                    externalContext.redirect(externalContext.getRequestContextPath() + "/loginError.xhtml");
+                    externalContext.redirect(externalContext.getRequestContextPath() + "/view/loginError.xhtml");
                 }
         }
     }

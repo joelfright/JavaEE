@@ -34,7 +34,7 @@ public class RegisterUser {
         em.getTransaction().begin();
         em.persist(user);
         em.getTransaction().commit();
-        return "datainputted";
+        return "view/datainputted";
     }
 
 }

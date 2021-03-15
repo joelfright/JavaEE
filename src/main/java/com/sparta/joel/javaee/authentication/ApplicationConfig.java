@@ -7,8 +7,8 @@ import javax.security.enterprise.authentication.mechanism.http.LoginToContinue;
 
 @CustomFormAuthenticationMechanismDefinition(
         loginToContinue = @LoginToContinue(
-                loginPage = "/index.xhtml",
-                errorPage = "/loginError.xhtml",
+                loginPage = "/view/index.xhtml",
+                errorPage = "/view/loginError.xhtml",
                 useForwardToLogin = false
         )
 )
